@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+canvas {
+    width: 99vw;
+    height: 99vh;
+}
+
+@media (max-width: 750px) {
+    canvas {
+        opacity: 0;
+    }
+}
