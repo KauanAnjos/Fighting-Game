@@ -25,6 +25,7 @@ class Sprite {
         }
         this.color = color
         this.isAttacking
+        this.vida = 100
     }
 
     draw() {
@@ -157,6 +158,8 @@ function animate() {
     }) &&
             player.isAttacking) {
                 player.isAttacking = false
+                enemy.vida -= 20
+                document.querySelector("#vida-inimigo").style.width = enemy.vida + "%"
     }
 
     
@@ -166,6 +169,8 @@ function animate() {
     }) &&
             enemy.isAttacking) {
                 enemy.isAttacking = false
+                player.vida -= 20
+                document.querySelector("#vida-jogador").style.width = player.vida + "%"
     }
 }
 
@@ -206,7 +211,7 @@ window.addEventListener("keydown", (event) => {
             break
 
         case "ArrowDown":
-            enemy.isAttacking = true
+            enemy.attack()
             break
     }
 })

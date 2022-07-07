@@ -8,8 +8,26 @@
 
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-    <canvas id="canvas"></canvas>
+<body> 
+     <!-- div container vermelho -->
+    <div id="container">
+        <!-- div container menor vermelho -->
+        <div id="container-small">
+            <!-- Vida do Jogador-->
+            <div class="vida-total">
+                <div id="jogador"></div>
+                <div id="vida-jogador"d></div>
+            </div>
+             <!-- Timer -->
+            <div id="timer"></div>
+             <!-- Vida do Inimigo-->
+             <div class="vida-total">
+                <div id="inimigo"></div>
+                <div id="vida-inimigo"></div>
+             </div>
+        </div>
+        <canvas id="canvas"></canvas>
+    </div>
 
     <script src="./main.js"></script>
 </body>

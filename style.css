@@ -4,6 +4,64 @@
     box-sizing: border-box;
 }
 
+#container {
+    position: relative;
+    display: inline-block;
+}
+
+#container-small {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 20px;
+}
+
+#jogador {
+    background: yellow;
+    height: 30px;
+    width: 100%;
+}
+
+#vida-jogador{
+    position: absolute;
+    background: blue;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+#timer {
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
+
+.vida-total {
+    position: relative;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    justify-items: flex-end;
+}
+
+#inimigo {
+    background-color: yellow;
+    height: 30px;
+    width: 100%;
+}
+
+#vida-inimigo {
+    position: absolute;
+    background: blue;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+}
+
 canvas {
     width: 99vw;
     height: 99vh;
