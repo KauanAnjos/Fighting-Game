@@ -18,7 +18,7 @@ class Sprite {
             position: {
                 x: this.position.x,
                 y: this.position.y
-            },
+            }, 
             offset,
             width: 100,
             height: 50
@@ -40,10 +40,7 @@ class Sprite {
     }
     update() {
         this.draw()
-        this.attackBox.position.x = this.position.x - this.attackBox.offset.x
-        this.attackBox.position.y = this.position.y
-
-        this.attackBox.position.x = this.position.x
+        this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y
 
         this.position.x += this.velocity.x
@@ -64,7 +61,7 @@ class Sprite {
 
 const player = new Sprite({
     position: {
-    x: 0,
+    x: 200,
     y: 0
     },
     velocity:  {
@@ -79,8 +76,8 @@ const player = new Sprite({
 
 const enemy = new Sprite({
     position: {
-    x: 400,
-    y: 100
+    x: 800,
+    y: 0
     },
     velocity:  {
         x: 0,
@@ -125,6 +122,35 @@ function rectangularCullision({ rectangle1, rectangle2}) {
         rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
     )
 }
+
+function determineWinner({player, enemy, timerId}) {
+    clearTimeout(timerId)
+    document.querySelector("#displayText").style.display = "flex"
+    if (player.vida === enemy.vida) {
+        document.querySelector("#displayText").innerHTML = "Tie"
+    } else if (player.vida > enemy.vida) {
+        document.querySelector("#displayText").innerHTML = "Jogador Venceu"
+    } else if (enemy.vida > player.vida) {
+        document.querySelector("#displayText").innerHTML = "Inimigo Venceu"
+    }
+}
+
+let timer = 60
+let timerId
+function decreseTimer() {
+    if (timer > 0) {
+        timerId = setTimeout (decreseTimer, 1000)
+        timer--
+        document.querySelector("#timer").innerHTML = timer
+    }
+
+    if (timer === 0) {
+        determineWinner({player, enemy})
+    }   
+}
+
+decreseTimer()
+
 function animate() {
     window.requestAnimationFrame(animate)
     context.fillStyle = "black"
@@ -151,7 +177,7 @@ function animate() {
         enemy.velocity.x = 5
     }
 
-//========== detectar colição ==========
+//========== Detectar colição ==========
     if (rectangularCullision({
         rectangle1: player,
         rectangle2: enemy
@@ -171,6 +197,11 @@ function animate() {
                 enemy.isAttacking = false
                 player.vida -= 20
                 document.querySelector("#vida-jogador").style.width = player.vida + "%"
+    }
+
+    // fim de jogo com base na vida
+    if (enemy.vida <= 0 || player.vida <= 0) {
+        determineWinner({player, enemy, timerId})
     }
 }
 

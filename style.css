@@ -23,7 +23,7 @@
     width: 100%;
 }
 
-#vida-jogador{
+#vida-jogador {
     position: absolute;
     background: blue;
     top: 0;
@@ -32,23 +32,33 @@
     width: 100%;
 }
 
+#vida-total-jogador {
+    position: relative;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
 #timer {
     background-color: red;
     width: 100px;
     height: 100px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.vida-total {
-    position: relative;
-    height: 30px;
-    width: 100%;
-    display: flex;
-    justify-items: flex-end;
-}
 
 #inimigo {
     background-color: yellow;
+    height: 30px;
+    width: 100%;
+}
+
+#vida-total-inimigo {
+    position: relative;
     height: 30px;
     width: 100%;
 }
@@ -59,7 +69,19 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: 100%;
+    left: 0;
+}
+
+#displayText {
+    position: absolute;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
 }
 
 canvas {
