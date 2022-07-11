@@ -38,6 +38,13 @@ const player = new Fighter({
     offset: {
         x: 0,
         y: 0
+    },
+    imageSrc: "./assets/pessonagens/Samurai/Sprites/Idle.png",
+    scale: 2.5,
+    framesMax: 8,
+    offset: {
+        x: 215,
+        y: 157
     }
 })
 
@@ -90,7 +97,7 @@ function animate() {
     background.update()
     shop.update()
     player.update()
-    enemy.update()
+    //enemy.update()
 
     player.velocity.x = 0
     enemy.velocity.x = 0
