@@ -54,8 +54,15 @@ const player = new Fighter({
       run: {
         imageSrc: "./assets/pessonagens/Samurai/Sprites/Run.png",
         framesMax: 8,
- 
-      }  
+      },
+      jump: {
+        imageSrc: "./assets/pessonagens/Samurai/Sprites/Jump.png",
+        framesMax: 2,
+      },
+      fall: {
+        imageSrc: "./assets/pessonagens/Samurai/Sprites/Fall.png",
+        framesMax: 2,
+      }
     }
 })
 
@@ -114,13 +121,23 @@ function animate() {
     enemy.velocity.x = 0
 
 //========== Movimetos do Jogador ========== 
-    player.image = player.sprites.idle.image
+
     if (keys.a.pressed && player.lastKey === "a") {
         player.velocity.x = -5
-        player.image = player.sprites.run.image
+        player.switchSpite("run")
     } else if (keys.d.pressed && player.lastKey === "d") {
         player.velocity.x = 5
-        player.image = player.sprites.run.image
+        player.switchSpite("run")
+    } else {
+        player.switchSpite("idle")
+    }
+
+//==========Pulando ========== 
+
+    if (player.velocity.y < 0) {
+        player.switchSpite("jump")
+    } else if (player.velocity.y > 0) {
+        player.switchSpite("fall")
     }
 
 //========== Movimetos do Inimigo ==========
@@ -132,6 +149,7 @@ function animate() {
     }
 
 //========== Detectar colição ==========
+
     if (rectangularCullision({
         rectangle1: player,
         rectangle2: enemy
