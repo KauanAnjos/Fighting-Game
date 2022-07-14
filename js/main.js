@@ -53,15 +53,19 @@ const player = new Fighter({
       },
       run: {
         imageSrc: "./assets/pessonagens/Samurai/Sprites/Run.png",
-        framesMax: 8,
+        framesMax: 8
       },
       jump: {
         imageSrc: "./assets/pessonagens/Samurai/Sprites/Jump.png",
-        framesMax: 2,
+        framesMax: 2
       },
       fall: {
         imageSrc: "./assets/pessonagens/Samurai/Sprites/Fall.png",
-        framesMax: 2,
+        framesMax: 2
+      },
+      attack1: {
+        imageSrc: "./assets/pessonagens/Samurai/Sprites/Attack1.png",
+        framesMax: 6
       }
     }
 })
