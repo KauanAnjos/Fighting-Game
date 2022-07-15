@@ -67,6 +67,14 @@ const player = new Fighter({
         imageSrc: "./assets/pessonagens/Samurai/Sprites/Attack1.png",
         framesMax: 6
       }
+    },
+    attackBox: {
+        offset: {
+            x: 50,
+            y: 40
+        },
+        width: 207,
+        height: 50
     }
 })
 
@@ -79,10 +87,46 @@ const enemy = new Fighter({
         x: 0,
         y: 0
     },
-    color: "blue",
     offset: {
         x: -50,
         y: 0
+    },
+    imageSrc: "./assets/pessonagens/Ladrao/Sprite/Idle.png",
+    scale: 2.4,
+    framesMax: 10,
+    offset: {
+        x: 215,
+        y: 50
+    },
+    sprites: {
+      idle: {
+        imageSrc: "./assets/pessonagens/Ladrao/Sprite/Idle.png",
+        framesMax: 10
+      },
+      run: {
+        imageSrc: "./assets/pessonagens/Ladrao/Sprite/Run.png",
+        framesMax: 8
+      },
+      jump: {
+        imageSrc: "./assets/pessonagens/Ladrao/Sprite/Going Up.png",
+        framesMax: 3
+      },
+      fall: {
+        imageSrc: "./assets/pessonagens/Ladrao/Sprite/Going Down.png",
+        framesMax: 3
+      },
+      attack1: {
+        imageSrc: "./assets/pessonagens/Ladrao/Sprite/Attack1.png",
+        framesMax: 7
+      }
+    },
+    attackBox: {
+        offset: {
+            x: -50,
+            y: 55
+        },
+        width: 135,
+        height: 50
     }
 })
 
@@ -119,7 +163,7 @@ function animate() {
     background.update()
     shop.update()
     player.update()
-    //enemy.update()
+    enemy.update()
 
     player.velocity.x = 0
     enemy.velocity.x = 0
@@ -136,7 +180,7 @@ function animate() {
         player.switchSpite("idle")
     }
 
-//==========Pulando ========== 
+//==========Pulando Jogador========== 
 
     if (player.velocity.y < 0) {
         player.switchSpite("jump")
@@ -148,9 +192,21 @@ function animate() {
 
     if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
         enemy.velocity.x = -5
+        enemy.switchSpite("run")
     } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
         enemy.velocity.x = 5
+        enemy.switchSpite("run")
+    } else {
+        enemy.switchSpite("idle")
     }
+
+//==========Pulando Inimigo ========== 
+
+if (enemy.velocity.y < 0) {
+    enemy.switchSpite("jump")
+} else if (enemy.velocity.y > 0) {
+    enemy.switchSpite("fall")
+}
 
 //========== Detectar colição ==========
 
@@ -158,21 +214,30 @@ function animate() {
         rectangle1: player,
         rectangle2: enemy
     }) &&
-            player.isAttacking) {
+            player.isAttacking && player.frameCurrent === 4) {
                 player.isAttacking = false
                 enemy.vida -= 20
                 document.querySelector("#vida-inimigo").style.width = enemy.vida + "%"
     }
 
+    // se o jogador errar
+    if (player.isAttacking && player.frameCurrent === 4) {
+        player.isAttacking = false
+    }
     
     if (rectangularCullision({
         rectangle1: enemy,
         rectangle2: player
     }) &&
-            enemy.isAttacking) {
+            enemy.isAttacking && enemy.frameCurrent === 5) {
                 enemy.isAttacking = false
-                player.vida -= 20
+                player.vida -= 25
                 document.querySelector("#vida-jogador").style.width = player.vida + "%"
+    }
+
+    // se o inimigo errar
+    if (enemy.isAttacking && enemy.frameCurrent === 5) {
+        enemy.isAttacking = false
     }
 
     // fim de jogo com base na vida
@@ -199,7 +264,7 @@ window.addEventListener("keydown", (event) => {
             player.velocity.y = -20
             break
 
-        case " ":
+        case "s":
             player.attack()
             break
 
