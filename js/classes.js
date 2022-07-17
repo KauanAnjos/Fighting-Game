@@ -57,7 +57,7 @@ class Fighter extends Sprite{
         })
 
         this.velocity = velocity
-        this.width = 50
+        this.width = 60
         this.height = 150
         this.lastKey
         this.attackBox = {
@@ -98,6 +98,9 @@ class Fighter extends Sprite{
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
+        // colição de dano
+        //context.fillRect(this.position.x, this.position.y, this.width, this.height)
+
         //========== Gravidade ========== 
         if (this.position.y + this.height + this.velocity.y >= canvas.height - 94) {
             this.velocity.y = 0
@@ -109,14 +112,28 @@ class Fighter extends Sprite{
        
 
         attack() {
-            this.switchSpite("attack1")
+            this.switchSprite("attack1")
             this.isAttacking = true
         }
 
-        switchSpite(sprite) {
-            if (this.image === this.sprites.attack1.image && this.frameCurrent < this.sprites.attack1.framesMax -1) return
+        takeHit() {
+            this.switchSprite("takeHit")
+            this.vida -= 20
+        }
 
+        switchSprite(sprite) {
+            //Substituindo todas as outras animações com a animação de ataque
+            if (this.image === this.sprites.attack1.image &&
+                 this.frameCurrent < this.sprites.attack1.framesMax -1)
+                  return
+
+            //substituindo quando o lutador é atingido
+            if (this.image === this.sprites.takeHit.image &&
+                 this.frameCurrent < this.sprites.takeHit.framesMax - 1)
+                  return
+            
             switch(sprite) {
+
                 case "idle":
                     if (this.image !== this.sprites.idle.image) {
                         this.image = this.sprites.idle.image
@@ -149,6 +166,13 @@ class Fighter extends Sprite{
                     if (this.image !== this.sprites.attack1.image) {
                         this.image = this.sprites.attack1.image
                         this.framesMax = this.sprites.attack1.framesMax
+                        this.frameCurrent = 0
+                    }
+                    break
+                case "takeHit":
+                    if (this.image !== this.sprites.takeHit.image) {
+                        this.image = this.sprites.takeHit.image
+                        this.framesMax = this.sprites.takeHit.framesMax
                         this.frameCurrent = 0
                     }
                     break

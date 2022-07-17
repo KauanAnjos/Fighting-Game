@@ -66,6 +66,10 @@ const player = new Fighter({
       attack1: {
         imageSrc: "./assets/pessonagens/Samurai/Sprites/Attack1.png",
         framesMax: 6
+      },
+      takeHit: {
+          imageSrc: "./assets/pessonagens/Samurai/Sprites/Take Hit.png",
+          framesMax: 4
       }
     },
     attackBox: {
@@ -92,11 +96,11 @@ const enemy = new Fighter({
         y: 0
     },
     imageSrc: "./assets/pessonagens/Ladrao/Sprite/Idle.png",
-    scale: 2.4,
+    scale: 2.5,
     framesMax: 10,
     offset: {
-        x: 215,
-        y: 50
+        x: 140,
+        y: 50,
     },
     sprites: {
       idle: {
@@ -118,11 +122,15 @@ const enemy = new Fighter({
       attack1: {
         imageSrc: "./assets/pessonagens/Ladrao/Sprite/Attack1.png",
         framesMax: 7
+      },
+      takeHit: {
+        imageSrc: "./assets/pessonagens/Ladrao/Sprite/Take Hit.png",
+        framesMax: 3
       }
     },
     attackBox: {
         offset: {
-            x: -50,
+            x: 38,
             y: 55
         },
         width: 135,
@@ -172,75 +180,77 @@ function animate() {
 
     if (keys.a.pressed && player.lastKey === "a") {
         player.velocity.x = -5
-        player.switchSpite("run")
+        player.switchSprite("run")
     } else if (keys.d.pressed && player.lastKey === "d") {
         player.velocity.x = 5
-        player.switchSpite("run")
+        player.switchSprite("run")
     } else {
-        player.switchSpite("idle")
+        player.switchSprite("idle")
     }
 
 //==========Pulando Jogador========== 
 
     if (player.velocity.y < 0) {
-        player.switchSpite("jump")
+        player.switchSprite("jump")
     } else if (player.velocity.y > 0) {
-        player.switchSpite("fall")
+        player.switchSprite("fall")
     }
 
 //========== Movimetos do Inimigo ==========
 
     if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
         enemy.velocity.x = -5
-        enemy.switchSpite("run")
+        enemy.switchSprite("run")
     } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
         enemy.velocity.x = 5
-        enemy.switchSpite("run")
+        enemy.switchSprite("run")
     } else {
-        enemy.switchSpite("idle")
+        enemy.switchSprite("idle")
     }
 
 //==========Pulando Inimigo ========== 
 
 if (enemy.velocity.y < 0) {
-    enemy.switchSpite("jump")
+    enemy.switchSprite("jump")
 } else if (enemy.velocity.y > 0) {
-    enemy.switchSpite("fall")
+    enemy.switchSprite("fall")
 }
 
-//========== Detectar colição ==========
+//========== Detectar colição do Jogador e receber um hit ==========
 
     if (rectangularCullision({
         rectangle1: player,
         rectangle2: enemy
     }) &&
             player.isAttacking && player.frameCurrent === 4) {
+                enemy.takeHit()
                 player.isAttacking = false
-                enemy.vida -= 20
+
                 document.querySelector("#vida-inimigo").style.width = enemy.vida + "%"
     }
 
-    // se o jogador errar
+    //========== Se o jogador errar ==========
     if (player.isAttacking && player.frameCurrent === 4) {
         player.isAttacking = false
     }
     
+//========== Detectar colição do Inimigo e receber um hit ==========
     if (rectangularCullision({
         rectangle1: enemy,
         rectangle2: player
     }) &&
             enemy.isAttacking && enemy.frameCurrent === 5) {
+                player.takeHit()
                 enemy.isAttacking = false
-                player.vida -= 25
                 document.querySelector("#vida-jogador").style.width = player.vida + "%"
     }
 
-    // se o inimigo errar
+    //========== Se o inimigo errar ==========
     if (enemy.isAttacking && enemy.frameCurrent === 5) {
         enemy.isAttacking = false
     }
 
-    // fim de jogo com base na vida
+    //========== Fim de jogo com base na vida ==========
     if (enemy.vida <= 0 || player.vida <= 0) {
         determineWinner({player, enemy, timerId})
     }
