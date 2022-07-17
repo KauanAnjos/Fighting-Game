@@ -178,6 +178,8 @@ function animate() {
     context.fillRect(0, 0, canvas.width, canvas.height)
     background.update()
     shop.update()
+    context.fillStyle = "rgba(255, 255, 255, 0.15)"
+    context.fillRect(0, 0, canvas.width, canvas.height)
     player.update()
     enemy.update()
 
@@ -234,7 +236,9 @@ if (enemy.velocity.y < 0) {
                 enemy.takeHit()
                 player.isAttacking = false
 
-                document.querySelector("#vida-inimigo").style.width = enemy.vida + "%"
+                gsap.to("#vida-inimigo", {
+                  width: enemy.vida + "%"
+                })
     }
 
     //========== Se o jogador errar ==========
@@ -250,7 +254,10 @@ if (enemy.velocity.y < 0) {
             enemy.isAttacking && enemy.frameCurrent === 5) {
                 player.takeHit()
                 enemy.isAttacking = false
-                document.querySelector("#vida-jogador").style.width = player.vida + "%"
+
+                gsap.to("#vida-jogador", {
+                    width: player.vida + "%"
+                  })
     }
 
     //========== Se o inimigo errar ==========
@@ -288,7 +295,7 @@ window.addEventListener("keydown", (event) => {
                 break
         }
     }
-    
+
     if (!enemy.dead) {
         switch(event.key) {
             case "ArrowRight":

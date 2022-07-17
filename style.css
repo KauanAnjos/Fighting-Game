@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Press Start 2P", cursive;
 }
 
 #container {
@@ -18,14 +19,14 @@
 }
 
 #jogador {
-    background: yellow;
+    background: red;
     height: 30px;
     width: 100%;
 }
 
 #vida-jogador {
     position: absolute;
-    background: blue;
+    background: #818CF8;
     top: 0;
     right: 0;
     bottom: 0;
@@ -34,38 +35,42 @@
 
 #vida-total-jogador {
     position: relative;
-    height: 30px;
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    border: 4px solid white;
+    border-right: 0px;
 }
 
 #timer {
-    background-color: red;
+    background-color: black;
     width: 100px;
-    height: 100px;
+    height: 50px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+    border: 4px solid white;
 }
 
 
 #inimigo {
-    background-color: yellow;
+    background-color: red;
     height: 30px;
     width: 100%;
 }
 
 #vida-total-inimigo {
     position: relative;
-    height: 30px;
     width: 100%;
+    border: 4px solid white;
+    border-left: 0px;
 }
 
 #vida-inimigo {
     position: absolute;
-    background: blue;
+    background: #818CF8;
     top: 0;
     right: 0;
     bottom: 0;
